@@ -1,0 +1,279 @@
+<!-- Header -->
+<header class="header" [class.scrolled]="scrolled">
+  <div class="container">
+    <nav class="navbar">
+      <div class="logo">
+        <a routerLink="/school">
+          <h2>🎓 PrismLearn</h2>
+                        </a>
+                    </div>
+      <ul class="nav-menu" [class.active]="isMenuOpen">
+        <li><a (click)="scrollToSection('home')">Home</a></li>
+        <li><a routerLink="/platform">Platform</a></li>
+        <li><a (click)="scrollToSection('insights')">Insights</a></li>
+        <li><a (click)="scrollToSection('roles')">For Your Role</a></li>
+        <li><a (click)="scrollToSection('testimonials')">Testimonials</a></li>
+        <li><a (click)="scrollToSection('contact')">Contact</a></li>
+                                            </ul>
+      <div class="nav-actions">
+        <a (click)="scrollToSection('contact')" class="btn btn-primary">Request Demo</a>
+        <button class="menu-toggle" (click)="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+                    </div>
+                </nav>
+            </div>
+</header>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          Build System That Reflect Growth.
+        </h1>
+        <p class="hero-description">
+          An intelligent academic platform that <strong>creates assessments, generates examinations, tracks skills, and manages student records</strong>—all connected, all measurable.
+        </p>
+        
+        <div class="hero-buttons">
+          <a (click)="scrollToSection('contact')" class="btn btn-outline">Request Institutional Demo</a>
+                        </div>
+                    </div>
+      <div class="hero-right-section">
+        <div class="hero-image-container">
+          <div class="hero-image-wrapper">
+            <img src="https://www.nextos.in/assets/images/bannerScreenshots.webp" 
+                 alt="PrismLearn Platform Dashboard" 
+                 class="hero-banner-image"
+                 (error)="handleImageError($event)">
+                        </div>
+                                    </div>
+        <div class="hero-features-list">
+          <div class="feature-badge" (click)="openPillarPopup(0)">
+            <span class="badge-icon">📊</span>
+            <span class="badge-text">Assessment Design</span>
+                                    </div>
+          <div class="feature-badge" (click)="openPillarPopup(1)">
+            <span class="badge-icon">📝</span>
+            <span class="badge-text">Examination Creation</span>
+                                </div>
+          <div class="feature-badge" (click)="openPillarPopup(2)">
+            <span class="badge-icon">🧠</span>
+            <span class="badge-text">Skill Evaluation</span>
+                            </div>
+          <div class="feature-badge" (click)="openPillarPopup(3)">
+            <span class="badge-icon">📈</span>
+            <span class="badge-text">Student Progress Tracking</span>
+                                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!-- Interactive Hook Section -->
+<section id="improvements" class="about section bg-light">
+            <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">We Help You to Improve In</h2>
+      <p class="section-description">
+        Our digital platform adapts to each goal.
+      </p>
+                        </div>
+    <div class="features-grid">
+      @for (goal of improvementGoals; track goal.title) {
+        <div class="feature-card">
+          <div class="feature-card-image">
+            <img [src]="goal.image" 
+                 [alt]="goal.title" 
+                 (error)="handleImageError($event)">
+            <div class="feature-card-overlay">
+              <h3>{{ goal.title }}</h3>
+              <p>{{ goal.description }}</p>
+                    </div>
+                </div>
+                    </div>
+                }
+                </div>
+            </div>
+        </section>
+
+<!-- The Real Problem Section -->
+<section id="problem" class="section" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white;">
+  <div class="container">
+    <div class="about-content" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <h2 class="section-title" style="color: white; font-size: 2.5rem; margin-bottom: 2rem;">
+        Marks End at Results.<br> Learning Drives Growth
+      </h2>
+      <div class="about-text" style="font-size: 1.125rem; line-height: 1.8;">
+        <p style="font-size: 1.5rem; margin-bottom: 2rem; font-weight: 500;">
+          Schools don't struggle with teaching.<br>
+          They struggle with measuring learning correctly.
+        </p>
+        <div style="margin: 2rem 0; font-size: 1.25rem;">
+          <p>Disconnected assessments.</p>
+          <p>Manual exam creation.</p>
+          <p>Scattered student data.</p>
+                        </div>
+        <p style="font-size: 1.5rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 2px solid rgba(255, 255, 255, 0.2); font-weight: 400;">
+          <strong>We solve this by creating a single academic framework where assessments, skills, and records work together—giving schools control, clarity, and confidence.</strong>
+        </p>
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Role-Based Value Section -->
+        <section id="roles" class="features section">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-title">Role-Based Value</h2>
+              <p class="section-description">
+                Designed for everyone in your academic ecosystem
+              </p>
+            </div>
+            <div class="features-grid">
+              @for (roleValue of roleValues; track roleValue.role) {
+                <div class="feature-card">
+                  <div class="feature-card-image">
+                    <img [src]="roleValue.image" 
+                         [alt]="roleValue.role" 
+                         (error)="handleImageError($event)">
+                    <div class="feature-card-overlay">
+                      <h3>{{ roleValue.role }}</h3>
+                      <p>{{ roleValue.benefits.join(', ') }}</p>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Trusted by Academic Leaders</h2>
+      <p class="section-description">
+        See what principals and academic heads are saying
+      </p>
+                        </div>
+    <div class="testimonials-container">
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <div class="stars">
+            @for (i of [1,2,3,4,5]; track i) {
+              <span>⭐</span>
+            }
+                                            </div>
+          <p class="testimonial-text">"{{ testimonials[currentTestimonial].text }}"</p>
+          <div class="testimonial-author">
+            <img [src]="testimonials[currentTestimonial].image" 
+                 [alt]="testimonials[currentTestimonial].name"
+                 (error)="handleImageError($event)">
+                                                <div>
+              <h4>{{ testimonials[currentTestimonial].name }}</h4>
+              <p>{{ testimonials[currentTestimonial].role }}</p>
+                                                </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+      <div class="testimonial-controls">
+        <button class="testimonial-btn" (click)="prevTestimonial()">‹</button>
+        <div class="testimonial-dots">
+          @for (testimonial of testimonials; track testimonial.name; let i = $index) {
+            <button 
+              class="dot" 
+              [class.active]="i === currentTestimonial"
+              (click)="goToTestimonial(i)">
+                                            </button>
+          }
+                               </div>
+        <button class="testimonial-btn" (click)="nextTestimonial()">›</button>
+                            </div>
+                </div>
+            </div>
+        </section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact section">
+  <div class="container">
+    <div class="section-header" style="margin-bottom: 1.5rem;">
+      <h2 class="section-title">Get in Touch</h2>
+                    </div>
+    <div class="contact-content">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <h4>Email</h4>
+            <p>info&#64;prismlearn.com<br>support&#64;prismlearn.com</p>
+                </div>
+                                    </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p>+91 98765 43210<br>+91 98765 43211</p>
+                                    </div>
+                                </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Address</h4>
+            <p>123 Education Street<br>New Delhi, India 110001</p>
+                                        </div>
+                                        </div>
+                                        </div>
+      <div class="contact-form">
+        <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1f2937;">Request a Demo</h3>
+        <form>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Your Name" required>
+                                    </div>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Your Email" required>
+                                    </div>
+          <div class="form-group">
+            <textarea class="form-control" rows="4" placeholder="Your Role, School Name, and tell us about your needs" required></textarea>
+                        </div>
+          <button type="submit" class="btn btn-primary btn-block">Request Demo</button>
+        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!-- Footer -->
+<app-footer></app-footer>
+
+<!-- Popup Modal for Platform Pillars -->
+@if (showPopup && selectedPillar) {
+  <div class="popup-overlay" (click)="closePopup()">
+    <div class="popup-content" (click)="$event.stopPropagation()">
+      <button class="popup-close" (click)="closePopup()" aria-label="Close">×</button>
+      <div class="popup-header">
+        <span class="popup-icon">{{ selectedPillar.icon }}</span>
+        <h2 class="popup-title">{{ selectedPillar.title }}</h2>
+        <p class="popup-subtitle">{{ selectedPillar.subtitle }}</p>
+                        </div>
+      <div class="popup-body">
+        <h3 class="popup-features-title">What makes it different:</h3>
+        <ul class="popup-features-list">
+          @for (feature of selectedPillar.features; track feature) {
+            <li>{{ feature }}</li>
+          }
+                            </ul>
+        <div class="popup-quote">
+          <p>{{ selectedPillar.quote }}</p>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+}
+

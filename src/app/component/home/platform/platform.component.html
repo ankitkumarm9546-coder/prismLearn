@@ -1,0 +1,66 @@
+<app-header></app-header>
+
+<!-- Platform Pillars Section -->
+<section class="platform-section">
+  <div class="container">
+    <div class="section-header">
+      <h1 class="page-title">Core Platform Pillars</h1>
+      <p class="page-subtitle">
+        Built for academic decision-making. Everything connects to create a complete learning intelligence system.
+      </p>
+    </div>
+
+    <div class="pillars-grid">
+      @for (pillar of platformPillars; track pillar.title) {
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <div class="pillar-icon">{{ pillar.icon }}</div>
+            <h2 class="pillar-title">{{ pillar.title }}</h2>
+            <p class="pillar-subtitle">{{ pillar.subtitle }}</p>
+          </div>
+          <div class="pillar-body">
+            <h3 class="pillar-features-title">What makes it different:</h3>
+            <ul class="pillar-features-list">
+              @for (feature of pillar.features; track feature) {
+                <li>{{ feature }}</li>
+              }
+            </ul>
+            <div class="pillar-quote">
+              <p>{{ pillar.quote }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Outcomes Section -->
+<section class="outcomes-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">What Schools Achieve with Our Platform</h2>
+      <p class="section-description">
+        Schools don't just manage academics. They <strong>understand</strong> them.
+      </p>
+    </div>
+
+    <div class="outcomes-grid">
+      @for (outcome of outcomes; track outcome.text) {
+        <div class="outcome-card">
+          <div class="outcome-icon">{{ outcome.icon }}</div>
+          <p class="outcome-text">{{ outcome.text }}</p>
+        </div>
+      }
+    </div>
+
+    <div class="outcomes-tagline">
+      <p>
+        Transform how your school measures, tracks, and improves learning outcomes.
+      </p>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
