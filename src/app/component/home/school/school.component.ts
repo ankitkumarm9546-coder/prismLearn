@@ -372,6 +372,12 @@ export class SchoolComponent implements OnInit {
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+    // Prevent body scroll when menu is open
+    if (this.isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 
   scrollToSection(sectionId: string): void {
