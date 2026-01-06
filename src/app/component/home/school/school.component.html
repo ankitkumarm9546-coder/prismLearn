@@ -9,7 +9,7 @@
                     </div>
       <ul class="nav-menu" [class.active]="isMenuOpen">
         <li><a (click)="scrollToSection('home')">Home</a></li>
-        <li><a (click)="scrollToSection('insights')">Insights</a></li>
+        <li><a (click)="scrollToSection('improvements')">Insights</a></li>
         <li><a (click)="scrollToSection('roles')">For Your Role</a></li>
         <li><a (click)="scrollToSection('testimonials')">Testimonials</a></li>
         <li><a (click)="scrollToSection('contact')">Contact</a></li>
@@ -215,39 +215,76 @@
           <div class="contact-icon">📧</div>
           <div>
             <h4>Email</h4>
-            <p>info&#64;prismlearn.com<br>support&#64;prismlearn.com</p>
+            <p>contact&#64;prismlearn.in</p>
                 </div>
                                     </div>
         <div class="contact-item">
           <div class="contact-icon">📞</div>
           <div>
             <h4>Phone</h4>
-            <p>+91 98765 43210<br>+91 98765 43211</p>
+            <p>+91 9693975216</p>
                                     </div>
                                 </div>
         <div class="contact-item">
           <div class="contact-icon">📍</div>
           <div>
             <h4>Address</h4>
-            <p>123 Education Street<br>New Delhi, India 110001</p>
+            <p><br>G1 Supertech The Romano <br>New Delhi, India</p>
                                         </div>
                                         </div>
                                         </div>
       <div class="contact-form">
         <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1f2937;">Request a Demo</h3>
-        <form>
+        <form (ngSubmit)="onSubmitContactForm()" #contactFormRef="ngForm">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Your Name" required>
-                                    </div>
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Your Name" 
+              [(ngModel)]="contactForm.name"
+              name="name"
+              required>
+          </div>
           <div class="form-group">
-            <input type="email" class="form-control" placeholder="Your Email" required>
-                                    </div>
+            <input 
+              type="email" 
+              class="form-control" 
+              placeholder="Your Email" 
+              [(ngModel)]="contactForm.email"
+              name="email"
+              required>
+          </div>
           <div class="form-group">
-            <textarea class="form-control" rows="4" placeholder="Your Role, School Name, and tell us about your needs" required></textarea>
-                        </div>
-          <button type="submit" class="btn btn-primary btn-block">Request Demo</button>
+            <textarea 
+              class="form-control" 
+              rows="4" 
+              placeholder="Your Role, School Name, and tell us about your needs" 
+              [(ngModel)]="contactForm.message"
+              name="message"
+              required></textarea>
+          </div>
+          @if (submitSuccess) {
+            <div class="form-message form-success" style="background: #d1fae5; color: #065f46; padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem;">
+              ✓ Thank you! Your message has been sent successfully.
+            </div>
+          }
+          @if (submitError) {
+            <div class="form-message form-error" style="background: #fee2e2; color: #991b1b; padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem;">
+              ✗ There was an error submitting your form. Please try again.
+            </div>
+          }
+          <button 
+            type="submit" 
+            class="btn btn-primary btn-block"
+            [disabled]="isSubmitting || !contactFormRef.valid">
+            @if (isSubmitting) {
+              Submitting...
+            } @else {
+              Request Demo
+            }
+          </button>
         </form>
-                    </div>
+      </div>
                 </div>
             </div>
         </section>

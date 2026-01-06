@@ -75,6 +75,16 @@ export class SchoolComponent implements OnInit {
   showPopup: boolean = false;
   selectedPillar: PlatformPillar | null = null;
 
+  // Contact form model
+  contactForm = {
+    name: '',
+    email: '',
+    message: ''
+  };
+  isSubmitting: boolean = false;
+  submitSuccess: boolean = false;
+  submitError: boolean = false;
+
   features: Feature[] = [
     {
       icon: '🎓',
@@ -112,21 +122,21 @@ export class SchoolComponent implements OnInit {
     {
       name: 'Dr. Priya Sharma',
       role: 'Principal',
-      image: './assets/images/faces/1.jpg',
+      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop',
       text: 'This platform has transformed how we assess and track student learning. The skill-based approach gives us insights we never had before.',
       rating: 5
     },
     {
       name: 'Rajesh Kumar',
       role: 'Academic Head',
-      image: './assets/images/faces/2.jpg',
+      image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
       text: 'The exam generation feature alone saves us weeks of work. But more importantly, it ensures consistency across all our assessments.',
       rating: 5
     },
     {
       name: 'Meera Patel',
       role: 'Vice Principal',
-      image: './assets/images/faces/3.jpg',
+      image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop',
       text: 'Finally, a system that connects assessments, skills, and records. Our teachers love it, and our academic outcomes have improved significantly.',
       rating: 5
     }
@@ -464,6 +474,130 @@ export class SchoolComponent implements OnInit {
     this.showPopup = false;
     this.selectedPillar = null;
     document.body.style.overflow = ''; // Restore scrolling
+  }
+
+  // Google Forms submission
+  // Form URL: https://docs.google.com/forms/d/e/1FAIpQLSdjZD4KFeDDqPSRyN-NaZR8oPB1sDSFLjZhCUxG9wJ0seNF8A/viewform
+  // Form Action URL - without /u/0/ for direct submission
+  private googleFormActionUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdjZD4KFeDDqPSRyN-NaZR8oPB1sDSFLjZhCUxG9wJ0seNF8A/formResponse';
+  
+  // Entry IDs extracted from form HTML:
+  // Name: entry.2005620554
+  // Email: entry.1045781291
+  // Message: entry.1065046570
+  private formEntryIds = {
+    name: 'entry.2005620554',      // Name field
+    email: 'entry.1045781291',     // Email field
+    message: 'entry.1065046570'   // Message field
+  };
+
+  onSubmitContactForm(): void {
+    if (this.isSubmitting) return;
+
+    // Validate form
+    if (!this.contactForm.name || !this.contactForm.email || !this.contactForm.message) {
+      this.submitError = true;
+      setTimeout(() => {
+        this.submitError = false;
+      }, 5000);
+      return;
+    }
+
+    this.isSubmitting = true;
+    this.submitSuccess = false;
+    this.submitError = false;
+
+    // Create a hidden iframe for form submission (prevents page redirect)
+    let iframe = document.getElementById('google-form-iframe') as HTMLIFrameElement;
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.id = 'google-form-iframe';
+      iframe.name = 'google-form-iframe';
+      iframe.style.position = 'fixed';
+      iframe.style.top = '-9999px';
+      iframe.style.left = '-9999px';
+      iframe.style.width = '1px';
+      iframe.style.height = '1px';
+      iframe.style.border = 'none';
+      iframe.style.opacity = '0';
+      iframe.style.pointerEvents = 'none';
+      document.body.appendChild(iframe);
+    }
+
+    // Create a hidden form and submit it to the iframe
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = this.googleFormActionUrl;
+    form.target = 'google-form-iframe';
+    form.style.display = 'none';
+    form.setAttribute('accept-charset', 'UTF-8');
+    form.enctype = 'application/x-www-form-urlencoded';
+
+    // Create input fields (browser will handle encoding automatically)
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.name = this.formEntryIds.name;
+    nameInput.value = this.contactForm.name.trim();
+
+    const emailInput = document.createElement('input');
+    emailInput.type = 'email';
+    emailInput.name = this.formEntryIds.email;
+    emailInput.value = this.contactForm.email.trim();
+
+    const messageInput = document.createElement('textarea');
+    messageInput.name = this.formEntryIds.message;
+    messageInput.value = this.contactForm.message.trim();
+
+    // Append inputs to form
+    form.appendChild(nameInput);
+    form.appendChild(emailInput);
+    form.appendChild(messageInput);
+
+    // Append form to body and submit
+    document.body.appendChild(form);
+    
+    // Submit the form
+    try {
+      form.submit();
+      
+      // Show success message after a short delay
+      // Note: We can't reliably detect success due to CORS/CSP, but assume it works
+      setTimeout(() => {
+        this.submitSuccess = true;
+        this.isSubmitting = false;
+        
+        // Reset form
+        this.contactForm = {
+          name: '',
+          email: '',
+          message: ''
+        };
+
+        // Clean up form after a delay
+        setTimeout(() => {
+          if (document.body.contains(form)) {
+            document.body.removeChild(form);
+          }
+          
+          // Hide success message after 5 seconds
+          setTimeout(() => {
+            this.submitSuccess = false;
+          }, 5000);
+        }, 500);
+      }, 500);
+    } catch (error) {
+      console.error('Form submission error:', error);
+      this.submitError = true;
+      this.isSubmitting = false;
+      
+      if (document.body.contains(form)) {
+        document.body.removeChild(form);
+      }
+      
+      setTimeout(() => {
+        this.submitError = false;
+      }, 5000);
+    }
   }
 }
 
